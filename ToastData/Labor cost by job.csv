@@ -1,0 +1,10 @@
+Department,hourOfDay,restaurantGuid,Regular hours,Overtime hours,Total hours,Regular cost,Overtime cost,Total cost,Labor % (net),Labor % (gross),Last Name,First Name,Chosen Name,Job code,Job title,Day
+,,,32.258,0.000,32.258,0.00,0.00,0.00,0.00,0.00,Lance,Darin,Darin,,Owner,
+,,,122.332,0.000,122.332,0.00,0.00,0.00,0.00,0.00,Conkey,Maia,,,Owner,
+,,,3.218,0.000,3.218,0.00,0.00,0.00,0.00,0.00,Trujillo,Dennis,,,Owner,
+,,,169.947,0.150,170.098,0.00,0.00,0.00,0.00,0.00,Training,Server,,,Owner,
+,,,194.894,0.000,194.894,0.00,0.00,0.00,0.00,0.00,Trimble,Dustin,,,Chef,
+,,,208.666,0.000,208.666,0.00,0.00,0.00,0.00,0.00,Wonnacott,Kody,,,Chef,
+,,,327.755,0.150,327.905,0.00,0.00,0.00,0.00,0.00,,,,,Owner,
+,,,403.560,0.000,403.560,0.00,0.00,0.00,0.00,0.00,,,,,Chef,
+,,,731.314,0.150,731.464,0.00,0.00,0.00,0.00,0.00,,,,,,

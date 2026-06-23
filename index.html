@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PrimeLedger</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="sidebar-open">
+    <div class="app-shell">
+      <aside id="primarySidebar" class="sidebar" aria-label="Primary">
+        <div class="sidebar-head">
+          <button
+            id="sidebarToggle"
+            class="sidebar-toggle"
+            type="button"
+            aria-label="Toggle navigation"
+            aria-controls="primarySidebar"
+            aria-expanded="true"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div class="brand">
+            <div class="brand-copy">
+              <strong>PrimeLedger</strong>
+              <span>Daily ops intelligence</span>
+            </div>
+          </div>
+        </div>
+
+        <nav class="nav-list">
+          <a class="active" href="#dashboard" data-view-link="dashboard">Dashboard</a>
+          <a href="#trends" data-view-link="trends">Trends</a>
+          <a href="#cash" data-view-link="cash">Cash Safety</a>
+          <a href="#imports" data-view-link="imports">Imports</a>
+          <a href="#settings" data-view-link="settings">Settings</a>
+        </nav>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="title-row">
+            <div>
+              <p class="eyebrow">Restaurant Command Center</p>
+              <h1>Daily Profitability Dashboard</h1>
+            </div>
+          </div>
+          <div class="date-control">
+            <label for="businessDate">Business date</label>
+            <select id="businessDate"></select>
+          </div>
+        </header>
+
+        <section id="dashboard" class="app-view active" data-view="dashboard">
+          <section id="overview" class="metrics-grid" aria-label="Daily summary metrics">
+            <article class="metric">
+              <span>Net sales</span>
+              <strong id="netSales">$0</strong>
+              <small id="salesDelta">0% vs prior day</small>
+            </article>
+            <article class="metric">
+              <span>Labor %</span>
+              <strong id="laborPercent">0%</strong>
+              <small id="laborDelta">0 pts vs target</small>
+            </article>
+            <article class="metric">
+              <span>Prime cost</span>
+              <strong id="primeCost">0%</strong>
+              <small id="primeCostDollars">$0 labor + COGS</small>
+            </article>
+            <article class="metric">
+              <span>Distribution safety</span>
+              <strong id="distributionSafety">$0</strong>
+              <small id="cashRunway">0 days runway</small>
+            </article>
+          </section>
+
+          <section class="workspace single-sidebar">
+            <section class="panel compact">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Action List</p>
+                  <h2>Alerts</h2>
+                </div>
+              </div>
+              <div id="alertsList" class="alerts-list"></div>
+            </section>
+          </section>
+        </section>
+
+        <section id="trends" class="app-view" data-view="trends">
+          <section class="primary-column">
+            <section id="profitability" class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Last 7 Days</p>
+                  <h2>Sales, Labor, and Prime Cost</h2>
+                </div>
+                <div class="legend">
+                  <span
+                    class="legend-item"
+                    tabindex="0"
+                    data-tooltip="Net sales for each business day before labor and COGS estimates."
+                  >
+                    <i class="sales-dot"></i>Sales
+                  </span>
+                  <span
+                    class="legend-item"
+                    tabindex="0"
+                    data-tooltip="Labor cost divided by net sales for the day."
+                  >
+                    <i class="labor-dot"></i>Labor %
+                  </span>
+                  <span
+                    class="legend-item"
+                    tabindex="0"
+                    data-tooltip="Estimated labor plus COGS divided by net sales."
+                  >
+                    <i class="prime-dot"></i>Prime %
+                  </span>
+                </div>
+              </div>
+              <div class="chart" id="trendChart" aria-label="Seven day trend chart"></div>
+            </section>
+
+            <section id="shifts" class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Shift View</p>
+                  <h2>Profitability by Daypart</h2>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Shift</th>
+                      <th>Sales</th>
+                      <th>Labor</th>
+                      <th>Labor %</th>
+                      <th>Est. contribution</th>
+                    </tr>
+                  </thead>
+                  <tbody id="shiftRows"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+        </section>
+
+        <section id="cash" class="app-view" data-view="cash">
+          <section class="workspace single-sidebar">
+            <section class="panel compact">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Cash Safety</p>
+                  <h2>Distribution Guardrail</h2>
+                </div>
+              </div>
+              <div class="form-grid">
+                <label>
+                  Bank cash
+                  <input id="bankCash" type="number" min="0" step="100" />
+                </label>
+                <label>
+                  Payroll override / adjustment
+                  <input id="payrollDue" type="number" min="0" step="100" />
+                </label>
+                <label>
+                  Vendor obligations
+                  <input id="vendorDue" type="number" min="0" step="100" />
+                </label>
+                <label>
+                  Operating reserve
+                  <input id="reserveTarget" type="number" min="0" step="100" />
+                </label>
+                <label>
+                  Default paid labor $/hour
+                  <input id="hourlyLaborCost" type="number" min="0" step="1" />
+                </label>
+              </div>
+              <div class="payroll-card" aria-label="Payroll cycle summary">
+                <div>
+                  <span>Previous payroll</span>
+                  <strong id="previousPayroll">$0</strong>
+                  <small id="previousPayrollWindow">No imported labor dates</small>
+                </div>
+                <div>
+                  <span>Upcoming payroll</span>
+                  <strong id="upcomingPayroll">$0</strong>
+                  <small id="upcomingPayrollWindow">No imported labor dates</small>
+                </div>
+                <div class="payroll-balance">
+                  <span>Cash after upcoming payroll</span>
+                  <strong id="cashAfterPayroll">$0</strong>
+                  <small>Before vendors and reserve</small>
+                </div>
+              </div>
+            </section>
+          </section>
+        </section>
+
+        <section id="imports" class="app-view" data-view="imports">
+          <section class="workspace single-sidebar">
+            <section class="panel compact">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Data Import</p>
+                  <h2>CSV Upload</h2>
+                </div>
+              </div>
+              <p class="helper-text">
+                Upload PrimeLedger CSVs or Toast exports:
+                <code>Sales by day</code>, <code>OrderDetails</code>, and
+                <code>Labor cost by job</code>.
+              </p>
+              <label class="file-drop">
+                <input id="csvInput" type="file" accept=".csv,text/csv" multiple />
+                <span>Choose CSV files</span>
+              </label>
+              <label class="file-drop secondary-drop">
+                <input
+                  id="folderInput"
+                  type="file"
+                  accept=".csv,text/csv"
+                  multiple
+                  webkitdirectory
+                  directory
+                />
+                <span>Choose Toast report folder</span>
+              </label>
+              <button id="loadToastData" class="load-data-button" type="button">
+                Load local ToastData
+              </button>
+              <div id="importStatus" class="import-status">
+                No data loaded. Upload Toast CSV files to populate the dashboard.
+              </div>
+            </section>
+          </section>
+        </section>
+
+        <section id="settings" class="app-view" data-view="settings">
+          <section class="settings-grid">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Labor Rules</p>
+                  <h2>Positions, Pay, and Matching</h2>
+                </div>
+              </div>
+              <p class="helper-text">
+                Rules match Toast labor rows by employee name or job title. Changes are saved in this browser.
+              </p>
+              <div class="table-wrap">
+                <table class="config-table">
+                  <thead>
+                    <tr>
+                      <th>Position / rule</th>
+                      <th>Match text</th>
+                      <th>Paid</th>
+                      <th>Rate</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="laborRuleRows"></tbody>
+                </table>
+              </div>
+              <button id="addLaborRule" class="secondary-button" type="button">Add labor rule</button>
+              <p class="helper-text">
+                After changing labor rules, imported Toast data is recalculated automatically when possible.
+              </p>
+            </section>
+
+            <section class="panel compact">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Operating Variables</p>
+                  <h2>Targets and Payroll</h2>
+                </div>
+              </div>
+              <div class="form-grid">
+                <label>
+                  Target labor %
+                  <input id="targetLaborPercent" type="number" min="0" step="0.5" />
+                </label>
+                <label>
+                  Estimated COGS %
+                  <input id="cogsPercent" type="number" min="0" step="0.5" />
+                </label>
+                <label>
+                  Target prime cost %
+                  <input id="targetPrimeCostPercent" type="number" min="0" step="0.5" />
+                </label>
+                <label>
+                  Upcoming payday
+                  <input id="upcomingPayday" type="date" />
+                </label>
+              </div>
+            </section>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script defer src="./app.js?v=20260526-10"></script>
+  </body>
+</html>
